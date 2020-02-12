@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.service.impl.BookMapper">
+
+	<!-- property는 VO에 맞춰주고 column은 db에 있는 필드명이랑 맞춰줘야함 -->
+	<!-- 여기 id값이랑 컨트롤러 호출시 생성자값이랑 같아야함-->
+	<resultMap id="bookList" type="bookVO">
+      <result property="bDate" column="bDate" />
+      <result property="bTime" column="bTime" />
+      <result property="mvname" column="mvname" />
+      <result property="mvroom" column="mvroom" />      
+   </resultMap>
+	
+	<resultMap id="bookDate" type="String">
+      <result property="String" column="bDate" />
+	</resultMap>
+	
+	
+	<!-- 상영표 등록 -->
+	<insert id="insertBook" parameterType="bookVO">
+		insert into mvbook
+		(bDate, bTime, mvname, mvroom)
+		values
+		(#{bDate}, #{bTime}, #{mvname}, #{mvroom})
+	</insert>
+	
+	<!-- 상영표 가지고오기 -->
+	 <select id="selectBook" resultMap="bookList">
+		select * from mvbook order by bDate, bTime
+	</select> 
+	
+	<!-- 상영 날짜 가져오기 -->
+	<select id="selectDateBook" resultMap="bookDate">
+		select bDate from mvbook group by bDate 
+	</select>
+	
+	<!-- 지난 영화 삭제 -->
+	<delete id="delPastBook" parameterType="int">
+		delete from mvbook where bId =#{bId}
+	</delete>
+	
+	<!-- 선택한 영화정보 가지고오기 -->
+	<select id="selectOneBook" resultType="bookVO">
+		select * from mvbook where bId= #{bId}
+	</select>
+	
+	
+</mapper>

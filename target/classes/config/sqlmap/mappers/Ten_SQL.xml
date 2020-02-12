@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.service.impl.TenMapper">
+	
+	<!-- property는 VO에 맞춰주고 column은 db에 있는 필드명이랑 맞춰줘야함 -->
+	<!-- 여기 id값이랑 컨트롤러 호출시 생성자값이랑 같아야함-->
+	<resultMap id="tenList" type="tenVO">
+      <result property="tId" column="bDate" />
+      <result property="chart" column="bTime" />
+      <result property="tenname" column="mvname" />
+   </resultMap>
+
+	<!-- 천만영화 갖고오기 -->
+	<select id="selectTen" parameterType="int" resultType="tenVO">
+		select * from tenmv where chart= #{chart}
+	</select>
+	<!-- 전체 천만영화 갖고오기 -->
+	<select id="selectTens" resultMap="tenList">
+		select * from tenmv
+	</select>
+</mapper>

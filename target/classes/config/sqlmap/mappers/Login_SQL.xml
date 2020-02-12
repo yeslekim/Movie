@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.service.impl.LoginMapper"> <!-- db연결문은 spring/datasource.xml에 있음 -->
+
+	<!-- 회원가입 -->
+	<insert id="insertUser" parameterType="userVO">
+		insert into user
+		(userId, userPw, userName, userSex, userPhone, isAdmin) <!-- db의 필드명 -->
+		values
+		(#{userId}, #{userPw}, #{userName}, #{userSex}, #{userPhone}, 0) <!-- VO의 변수명 -->
+	</insert>
+
+
+	<!-- 로그인 -->
+	<select id="loginUser" parameterType="String" resultType="String">
+		select userPw from user where userId = #{id} <!-- 해당id의 비밀번호 호출 -->
+	</select>
+	
+	<select id="selectUser" parameterType="String" resultType="userVO">
+		select * from user where userId=#{id}
+	</select>
+
+
+	<!-- 회원정보 수정 -->	
+	<update id="updateUser" parameterType="String">
+		update user set userPw = #{userPw}, userName= #{userName}, userSex= #{userSex}, userPhone= #{userPhone}
+	</update>
+	
+	
+	<!-- 회원 삭제 -->
+	<delete id="deleteUser" parameterType="userVO" >
+		delete from user where userId =#{userId} and userPw = #{userPw}
+	</delete>
+	
+	
+</mapper>
+

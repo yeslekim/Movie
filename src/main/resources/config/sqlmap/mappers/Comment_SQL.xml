@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.service.impl.CommentMapper">
+
+	<!-- property는 VO에 맞춰주고 column은 db에 있는 필드명이랑 맞춰줘야함 -->
+	<!-- 여기 id값이랑 컨트롤러 호출시 생성자값이랑 같아야함-->
+	<resultMap id="commentList" type="commentVO">
+	  <result property="id" column="id" />
+      <result property="number" column="number" />
+      <result property="userId" column="userId" />
+      <result property="comment" column="comment" />
+      <result property="time" column="time" />      
+   </resultMap>
+
+	<!-- 댓글작성 -->
+	<insert id="insertComment" parameterType="commentVO">
+		insert into comment
+		(number, userId, comment, time)
+		values
+		(#{number}, #{userId}, #{comment}, sysdate())
+	</insert>
+	
+	<!-- 댓글 가져오기 -->
+	<select id="selectComment" resultMap="commentList">
+		select * from comment where number= #{number};
+	</select>
+	
+	<!-- 댓글 삭제하기 -->
+	<delete id="commentDel" parameterType="int">
+		delete from comment where id= #{id}
+	</delete>
+</mapper>

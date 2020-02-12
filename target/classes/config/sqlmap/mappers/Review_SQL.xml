@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.service.impl.ReviewMapper">
+
+	
+	<!-- property는 VO에 맞춰주고 column은 db에 있는 필드명이랑 맞춰줘야함 -->
+	<!-- 여기 id값이랑 컨트롤러 호출시 생성자값이랑 같아야함-->
+	<resultMap id="reviewList" type="reviewVO">
+	  <result property="rvId" column="rvId" />
+      <result property="mvname" column="mvname" />
+      <result property="userId" column="userId" />
+      <result property="review" column="review" />
+       <result property="id" column="id" />
+      <result property="time" column="time" />      
+   </resultMap>
+
+	<!-- 리뷰 등록 -->
+	<insert id="insertReview" parameterType="reviewVO">
+		insert into review
+		(userId, review, id, time)
+		values
+		(#{userId}, #{review}, #{id}, sysdate())
+	</insert>
+	
+	<!-- 리뷰 가저오기 -->
+	<select id="selectReview" resultMap="reviewList">
+		select * from review where id= #{id}
+	</select>
+	
+	<!-- 리뷰 삭제하기 -->
+	<delete id="reviewDel" parameterType="int">
+		delete from review where rvId= #{rvId}
+	</delete>
+	
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countReview" parameterType="int" resultType="int">
+		SELECT COUNT(*) FROM review where id= #{id}
+	</select>
+	
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectReview2" resultType="reviewVO">
+	select * from review where id= #{id} order by rvId desc limit #{start}, #{cntPerPage}
+	</select>
+</mapper>

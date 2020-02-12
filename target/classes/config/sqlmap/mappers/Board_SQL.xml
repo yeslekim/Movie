@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.service.impl.BoardMapper">
+
+	<!-- property는 VO에 맞춰주고 column은 db에 있는 필드명이랑 맞춰줘야함 -->
+	<!-- 여기 id값이랑 컨트롤러 호출시 생성자값이랑 같아야함-->
+	<resultMap id="boardList" type="boardVO">
+      <result property="title" column="title" />
+      <result property="userId" column="userId" />
+      <result property="memo" column="memo" />
+      <result property="time" column="time" />      
+   </resultMap>
+   
+	
+	<!-- 게시판 작성 -->
+	<insert id="insertBoard" parameterType="boardVO">
+		insert into board
+		(title, userId, memo, time, total)
+		values
+		(#{title}, #{userId}, #{memo}, sysdate(), 0)
+	</insert>
+	
+	<!-- 게시판 불러오기 예제 -->
+   <select id="selectBoard" resultMap="boardList">
+      select * from board order by number desc
+   </select>
+
+	<!-- 게시판 내용 불러오기 -->
+	<select id="boardRead" parameterType="int" resultType="boardVO">
+		select * from board where number= #{number}
+	</select>
+	
+	<!-- 게시판 삭제 -->
+	<delete id="boarddel" parameterType="int">
+		delete from board where number=#{number}
+	</delete>
+	
+	<!-- 게시판 수정 -->
+	<update id="updateBoard" parameterType="boardVO">
+		update board set title= #{title}, memo= #{memo}, time= sysdate() where number= #{number}
+	</update>
+	
+	<!-- 조회수 -->
+	<update id="updateTotal" parameterType="boardVO">
+		update board set total= #{total} where number= #{number}
+	</update>
+	
+	<!-- 총 게시글 갯수 출력 -->
+	<select id="countBoard" resultType="int">
+		SELECT COUNT(*) FROM BOARD
+	</select>
+	
+	<!-- 페이징 처리 후 게시글 조회 -->
+	<select id="selectBoard2" resultType="boardVO">
+	select * from board order by number desc limit #{start}, #{end}
+	</select>
+</mapper>

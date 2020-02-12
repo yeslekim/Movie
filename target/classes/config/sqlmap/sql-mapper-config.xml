@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <typeAliases>
+    	<typeAlias alias="userVO" type="com.service.UserVO" />
+    	<typeAlias alias="boardVO" type="com.service.BoardVO" />
+    	<typeAlias alias="commentVO" type="com.service.CommentVO" />
+    	<typeAlias alias="movieVO" type="com.service.MovieVO" />
+    	<typeAlias alias="reviewVO" type="com.service.ReviewVO" />
+    	<typeAlias alias="bookVO" type="com.service.BookVO" />
+    	<typeAlias alias="userBookVO" type="com.service.UserBookVO" />
+    	<typeAlias alias="mvRoomVO" type="com.service.MvRoomVO" />
+    	<typeAlias alias="tenVO" type="com.service.TenVO" />
+    </typeAliases>
+</configuration>
